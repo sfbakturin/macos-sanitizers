@@ -37,7 +37,7 @@ jobs:
           # Several of this sanitizers are not presented in MacOS-14
           - version: 14
             sanitizer: memory
-          - version: 13
+          - version: 14
             compiler: appleclang-18
             sanitizer: leak
 
