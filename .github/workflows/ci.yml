@@ -16,36 +16,13 @@ jobs:
           - 14
 
         compiler:
-          - clang-18
           - appleclang-18
-          - clang-17
           - appleclang-17
 
         sanitizer:
           - address
-          - leak
           - undefined
           - thread
-          - memory
-
-        exclude:
-          # There is no Clang-18 on MacOS-13
-          - version: 13
-            compiler: clang-18
-          # Several of this sanitizers are not presented in MacOS-13 + clang-18
-          - version: 13
-            sanitizer: leak
-          - version: 13
-            sanitizer: memory
-          # Several of this sanitizers are not presented in MacOS-14
-          - version: 14
-            sanitizer: memory
-          - version: 14
-            compiler: appleclang-18
-            sanitizer: leak
-          - version: 14
-            compiler: clang-18
-            sanitizer: leak
 
     runs-on: macos-${{ matrix.version }}
 
