@@ -32,7 +32,7 @@ jobs:
           # Several of this sanitizers are not presented in MacOS-13 + clang-18
           - version: 13
             sanitizer: leak
-          - verison: 13
+          - version: 13
             sanitizer: memory
           # Several of this sanitizers are not presented in MacOS-14
           - version: 14
