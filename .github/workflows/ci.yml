@@ -18,6 +18,9 @@ jobs:
         compiler:
           - appleclang-18
           - appleclang-17
+          - gcc-13
+          - gcc-12
+          - gcc-11
 
         sanitizer:
           - address
