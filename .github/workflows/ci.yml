@@ -4,7 +4,7 @@ on: push
 
 jobs:
   buildtest:
-    name: MacOS ${{ matrix.version }} ${{ matrix.compiler }}
+    name: MacOS ${{ matrix.version }} ${{ matrix.compiler }} (with -fsanitize=${{ matrix.sanitizer }})
 
     strategy:
       fail-fast: false
@@ -25,6 +25,11 @@ jobs:
           - thread
           - memory
 
+        exclude:
+          # There is no Clang-18 on MacOS-13
+          - version: 13
+            compiler: clang-18
+
     runs-on: macos-${{ matrix.version }}
 
     steps:
@@ -35,7 +40,7 @@ jobs:
           compiler: ${{ matrix.compiler }}
 
       - name: Build
-        run: build.sh ${{ matrix.sanitizer }}
+        run: bash build.sh ${{ matrix.sanitizer }}
 
       - name: Test
-        run: test.sh
+        run: bash test.sh
