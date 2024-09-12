@@ -13,3 +13,6 @@ set -euo pipefail
 
 ./thread.exe || echo "Failed. That's good."
 ./thread++.exe || echo "Failed. That's good."
+
+./good.exe
+./good++.exe
