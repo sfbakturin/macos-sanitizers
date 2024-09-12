@@ -11,12 +11,15 @@ jobs:
 
       matrix:
         version:
+          - 12
           - 13
           - 14
-      
+
         compiler:
           - clang-18
           - appleclang-18
+          - clang-17
+          - appleclang-17
 
         sanitizer:
           - address
@@ -39,6 +42,9 @@ jobs:
             sanitizer: memory
           - version: 14
             compiler: appleclang-18
+            sanitizer: leak
+          - version: 14
+            compiler: clang-18
             sanitizer: leak
 
     runs-on: macos-${{ matrix.version }}
