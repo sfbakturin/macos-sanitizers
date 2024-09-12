@@ -1,0 +1,41 @@
+name: CI/CD
+
+on: push
+
+jobs:
+  buildtest:
+    name: MacOS ${{ matrix.version }} ${{ matrix.compiler }}
+
+    strategy:
+      fail-fast: false
+
+      matrix:
+        version:
+          - 13
+          - 14
+      
+        compiler:
+          - clang-18
+          - appleclang-18
+
+        sanitizer:
+          - address
+          - leak
+          - undefined
+          - thread
+          - memory
+
+    runs-on: macos-${{ matrix.version }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: aminya/setup-cpp@v1
+        with:
+          compiler: ${{ matrix.compiler }}
+
+      - name: Build
+        run: build.sh ${{ matrix.sanitizer }}
+
+      - name: Test
+        run: test.sh
