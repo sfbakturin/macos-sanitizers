@@ -11,9 +11,11 @@ jobs:
 
       matrix:
         version:
-          - 12
-          - 13
-          - 14
+          - 12             # MacOS 12
+          - 13             # MacOS 13
+          - macos-14-large # MacOS 14
+          - 13-xlarge      # MacOS 13 Arm64
+          - 14             # MacOS 14 Arm64
 
         compiler:
           - appleclang-18
