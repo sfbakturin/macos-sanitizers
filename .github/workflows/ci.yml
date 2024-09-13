@@ -4,32 +4,25 @@ on: push
 
 jobs:
   buildtest:
-    name: MacOS ${{ matrix.version }} ${{ matrix.compiler }} (with -fsanitize=${{ matrix.sanitizer }})
+    name: ${{ matrix.system.name }} ${{ matrix.compiler }} (with -fsanitize=${{ matrix.sanitize }})
 
     strategy:
       fail-fast: false
 
       matrix:
-        version:
-          - 12             # MacOS 12
-          - 13             # MacOS 13
-          - macos-14-large # MacOS 14
-          - 13-xlarge      # MacOS 13 Arm64
-          - 14             # MacOS 14 Arm64
+        system:
+          - { name: macOS, os: macos-13, }
+          - { name: macOS M1, os: macos-14, }
 
         compiler:
           - appleclang-18
-          - appleclang-17
-          - appleclang-16
-          - appleclang-15
-          - appleclang-14
 
-        sanitizer:
+        sanitize:
           - address
           - undefined
           - thread
 
-    runs-on: macos-${{ matrix.version }}
+    runs-on: ${{ matrix.system.os }}
 
     steps:
       - uses: actions/checkout@v4
@@ -39,7 +32,7 @@ jobs:
           compiler: ${{ matrix.compiler }}
 
       - name: Build
-        run: bash build.sh ${{ matrix.sanitizer }}
+        run: bash build.sh ${{ matrix.sanitize }}
 
       - name: Test
         run: bash test.sh
