@@ -5,8 +5,8 @@ set -euo pipefail
 SANITIZE="${1}"
 
 # Show versions.
-clang-18 --version
-clang++-18 --version
+${CC} --version
+${CXX} --version
 
 if [ "${SANITIZE}" == "address" ]; then
     ${CC} -O1 -g -Wall -Wextra -Wpedantic -fno-sanitize-recover=all -fsanitize-trap=all -fsanitize="${SANITIZE}" -fno-omit-frame-pointer -fno-optimize-sibling-calls -std=c99 leak.c -o leak.exe
