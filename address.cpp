@@ -1,4 +1,7 @@
-int main(void) {
-  int arr[100];
-  return arr[100];
+#include <array>
+
+int main()
+{
+	std::array<int, 100> arr;
+	return arr[100];
 }
