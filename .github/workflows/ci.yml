@@ -4,36 +4,30 @@ on: push
 
 jobs:
   buildtest:
-    name: ${{ matrix.system.name }} ${{ matrix.compiler }} (with -fsanitize=${{ matrix.sanitize }})
+    name: ${{ matrix.system.name }} (with -fsanitize=${{ matrix.sanitize }})
 
     strategy:
       fail-fast: false
 
       matrix:
         system:
-          - { name: macOS 13,              os: macos-13        }
-          - { name: macOS 13 Arm64,        os: macos-13-xlarge }
-          - { name: macOS 14,              os: macos-14-large  }
-          - { name: macOS 14 Arm64,        os: macos-14        }
-          - { name: macOS 15 (beta),       os: macos-15-large  }
-          - { name: macOS 15 Arm64 (beta), os: macos-15        }
-
-        compiler:
-          - appleclang-19
+          - { name: macOS 13,              runner: macos-13 }
+          - { name: macOS 14 Arm64,        runner: macos-14 }
+          - { name: macOS 15 Arm64 (beta), runner: macos-15 }
 
         sanitize:
           - address
           - undefined
           - thread
 
-    runs-on: ${{ matrix.system.os }}
+    runs-on: ${{ matrix.system.runner }}
 
     steps:
       - uses: actions/checkout@v4
 
       - uses: aminya/setup-cpp@v1
         with:
-          compiler: ${{ matrix.compiler }}
+          compiler: appleclang-19
 
       - name: Build
         run: bash build.sh ${{ matrix.sanitize }}
